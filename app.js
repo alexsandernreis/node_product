@@ -7,8 +7,8 @@ app.use(express.json());
 
 let products = [];
 
-fs.readFile("products.json", "utf-8", (err,data) => {
-    if(err) {
+fs.readFile("products.json", "utf-8", (err, data) => {
+    if (err) {
         console.log(err);
     } else {
         products = JSON.parse(data);
@@ -16,8 +16,8 @@ fs.readFile("products.json", "utf-8", (err,data) => {
 });
 
 //POST
-app.post("/products", (reqs,resp) => {
-    const {name, price } = reqs.body;
+app.post("/products", (reqs, resp) => {
+    const { name, price } = reqs.body;
 
     const product = {
         id: randomUUID(),
@@ -27,26 +27,28 @@ app.post("/products", (reqs,resp) => {
 
     products.push(product);
     try {
-        productFile();        
+        productFile();
     } catch (error) {
         return error;
     }
-   
-    return resp.json({message: "Product sucessfully insert!",
-                        products
-                    });
+
+    return resp.json({
+        message: "Product sucessfully insert!",
+        products
+    });
 });
 
 //GET ALL
-app.get("/products", (reqs,resp) => {
+app.get("/products", (reqs, resp) => {
 
-    if(products.length > 0){
-        return resp.json({message: "Products find!",
-                          products
-                        });
+    if (products.length > 0) {
+        return resp.json({
+            message: "Products find!",
+            products
+        });
     }
     else {
-        return resp.json({message: "Nothing data product!"});
+        return resp.json({ message: "Nothing data product!" });
     }
 
     //if(!products) return resp.status(404).json;
@@ -54,28 +56,29 @@ app.get("/products", (reqs,resp) => {
 });
 
 //GET ID
-app.get("/products/:id", (reqs,resp) => {
+app.get("/products/:id", (reqs, resp) => {
     const { id } = reqs.params;
     const product = products.find((product) => product.id === id);
 
     //if(product === undefined) return resp.status(404).json;
-    if(product){
-        return resp.json({message: "Product find for id!",
-                            product
-                        });
+    if (product) {
+        return resp.json({
+            message: "Product find for id!",
+            product
+        });
     }
     else {
-        return resp.json({message: "Product not find for id!"});
+        return resp.json({ message: "Product not find for id!" });
     }
 
     //if(!product) return resp.status(404).json;
-    
+
 });
 
 //POST FIND NAME
 
-app.post("/products/name", (reqs,resp) => {
-    const {name, price } = reqs.body;
+app.post("/products/name", (reqs, resp) => {
+    const { name, price } = reqs.body;
 
     const product = {
         name,
@@ -83,23 +86,25 @@ app.post("/products/name", (reqs,resp) => {
     }
 
     const productfind = products.filter((product) => product.name == name);
-    if(productfind.length > 0){
-        return resp.json({message: "Product sucessfully changed for Name!",
-                            productfind
-                        });
+    if (productfind.length > 0) {
+        return resp.json({
+            message: "Product sucessfully changed for Name!",
+            productfind
+        });
     }
     else {
-        return resp.json({message: "Product not find for Name!",
-                            name
-                        });
+        return resp.json({
+            message: "Product not find for Name!",
+            name
+        });
     }
-    
+
 });
 
 //PUT
-app.put("/products/:id", (reqs,resp) => {
+app.put("/products/:id", (reqs, resp) => {
     const { id } = reqs.params;
-    const {name, price } = reqs.body;
+    const { name, price } = reqs.body;
 
     const productIndex = products.findIndex((product) => product.id === id);
     products[productIndex] = {
@@ -112,21 +117,23 @@ app.put("/products/:id", (reqs,resp) => {
     productFile();
 
     const product = products.find((product) => product.id === id);
-    if(productIndex > -1){
-        return resp.json({message: "Product sucessfully changed!",
-                            product
-                        });
+    if (productIndex > -1) {
+        return resp.json({
+            message: "Product sucessfully changed!",
+            product
+        });
     }
     else {
-        return resp.json({message: "Product not find!",
-                            id
-                        });
+        return resp.json({
+            message: "Product not find!",
+            id
+        });
     }
 
 });
 
 //DELETE
-app.delete("/products/:id", (reqs,resp) => {
+app.delete("/products/:id", (reqs, resp) => {
     const { id } = reqs.params;
     const productIndex = products.findIndex((product) => product.id === id);
 
@@ -136,18 +143,19 @@ app.delete("/products/:id", (reqs,resp) => {
 
     productFile();
 
-    return resp.json({  message: "Product sucessfully deleted!",
-                        product
-                    });
+    return resp.json({
+        message: "Product sucessfully deleted!",
+        product
+    });
 
     //return resp.status(404).json;
 
 });
 
 // FUNCTION FILE
-function productFile(){
+function productFile() {
     fs.writeFile("products.json", JSON.stringify(products), (err) => {
-        if(err){
+        if (err) {
             console.log(err);
         } else {
             console.log("Product insert");
