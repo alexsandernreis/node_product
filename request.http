@@ -1,0 +1,40 @@
+###
+// POST INSERT
+POST http://localhost:4002/products
+content-type: application/json
+
+{   
+    "name": "pencil" ,
+    "price": "10000.00"
+}
+
+###
+// GET ALL SELECT
+GET http://localhost:4002/products
+
+###
+// GET ID SELECT
+GET http://localhost:4002/products/fed9e408-692c-4376-9cf8-4e21b3b3524d
+
+###
+// POST FIND NAME SELECT
+POST http://localhost:4002/products/name
+content-type: application/json
+
+{   
+    "name": "rubber" 
+}
+
+###
+//PUT ALTER BODY
+PUT http://localhost:4002/products/7327e20e-9cd5-4e96-8ba0-6b5b97ff15c6
+content-type: application/json
+
+{   
+    "name": "pencil" ,
+    "price": "5.00"
+}
+
+###
+//DELETE ID
+DELETE http://localhost:4002/products/0403897d-e53f-46e1-b754-43f1af4fac3

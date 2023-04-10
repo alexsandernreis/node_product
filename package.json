@@ -1,0 +1,19 @@
+{
+  "name": "projectnode1",
+  "version": "1.0.0",
+  "description": "aula nodejs daniela leao evangelista",
+  "main": "index.js",
+  "scripts": {
+    "devrun": "nodemon app.js",
+    "test": "testproject"
+  },
+  "author": "Alexsander",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "github": "^14.0.0",
+    "i": "^0.3.7",
+    "nestjs": "^0.0.1",
+    "nodemon": "^2.0.22"
+  }
+}
