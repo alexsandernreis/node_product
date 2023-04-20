@@ -1,0 +1,237 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Simple Products API",
+    "description" : "This is a simple API Products xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "contact" : {
+      "name" : "Alexsander",
+      "email" : "alexsandernreis@gmail.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/ALEXSANDERNREIS_1/server-product/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "tags" : [ {
+    "name" : "admins",
+    "description" : "Secured Admin-only calls"
+  }, {
+    "name" : "developers",
+    "description" : "Operations available to regular developers"
+  } ],
+  "paths" : {
+    "/products" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "searches product",
+        "description" : "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
+        "operationId" : "searchProduct",
+        "parameters" : [ {
+          "name" : "searchString",
+          "in" : "query",
+          "description" : "pass an optional search string for looking up products",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "skip",
+          "in" : "query",
+          "description" : "number of records to skip for pagination",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "maximum number of records to return",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 50,
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductItem"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "developers" ],
+        "summary" : "adds an product item",
+        "description" : "Adds an item to the system",
+        "operationId" : "addProduct",
+        "requestBody" : {
+          "description" : "Product item to add",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "item created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing item already exists"
+          }
+        }
+      }
+    },
+    "/products/name" : {
+      "post" : {
+        "tags" : [ "developers" ],
+        "summary" : "find an product name",
+        "description" : "Find an name product to the system",
+        "operationId" : "findNameProduct",
+        "requestBody" : {
+          "description" : "Product item to look",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ProductItem"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "item created"
+          },
+          "400" : {
+            "description" : "invalid input, object invalid"
+          },
+          "409" : {
+            "description" : "an existing item already exists"
+          }
+        }
+      }
+    },
+    "/products/{id}" : {
+      "get" : {
+        "tags" : [ "developers" ],
+        "summary" : "searches id product",
+        "description" : "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
+        "operationId" : "searchIdProduct",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "User ID",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "skip",
+          "in" : "query",
+          "description" : "number of records to skip for pagination",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "maximum number of records to return",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 50,
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "search results matching criteria name",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ProductItem"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "ProductItem" : {
+        "required" : [ "id", "name", "releaseDate" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "Widget Adapter"
+          },
+          "price" : {
+            "type" : "number"
+          },
+          "releaseDate" : {
+            "type" : "string",
+            "format" : "date-time",
+            "example" : "2016-08-29T09:12:33.001Z"
+          }
+        }
+      }
+    }
+  }
+}
