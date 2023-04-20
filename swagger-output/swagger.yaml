@@ -1,0 +1,14 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "",
+    "description" : "",
+    "version" : "1"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/ALEXSANDERNREIS_1/Products/1",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "paths" : { },
+  "components" : { }
+}
